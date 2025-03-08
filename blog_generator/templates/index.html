@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Blog Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Blog Generator</h1>
+        <p>Enter a topic to generate a well-structured blog.</p>
+        <input type="text" id="topicInput" placeholder="Enter a topic..." required>
+        <button onclick="generateBlog()">Generate Blog</button>
+
+        <div class="blog-output-container">
+            <h2>Generated Blog:</h2>
+            <div class="blog-output" id="blogContent"></div>
+        </div>
+    </div>
+
+    <script>
+        function generateBlog() {
+            var topic = $("#topicInput").val();
+            if (!topic) {
+                alert("Please enter a topic!");
+                return;
+            }
+
+            $.post("/generate", { topic: topic }, function(response) {
+                $("#blogContent").html(response.blog);
+            });
+        }
+    </script>
+</body>
+</html>
